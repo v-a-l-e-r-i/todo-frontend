@@ -48,7 +48,7 @@ export default function TaskDetailPanel({ task, projects, onClose, onSave, onMov
 
   if (!task) {
     return (
-      <aside className="hidden w-full flex-col items-center justify-center gap-2 border-t border-[var(--color-line)] bg-[var(--color-surface)] p-6 text-center sm:border-l sm:border-t-0 lg:flex lg:w-[380px] lg:shrink-0">
+      <aside className="hidden lg:flex w-[380px] shrink-0 flex-col items-center justify-center gap-2 border-l border-[var(--color-line)] bg-[var(--color-surface)] p-6 text-center">
         <p className="text-sm font-medium text-[var(--color-ink-faint)]">
           Select a task to see its details
         </p>
@@ -86,12 +86,12 @@ export default function TaskDetailPanel({ task, projects, onClose, onSave, onMov
   }
 
   return (
-    <aside className="fixed inset-0 top-auto z-50 flex w-full shrink-0 flex-col border-t border-[var(--color-line)] bg-[var(--color-surface)] p-4 sm:static sm:p-6 lg:w-[380px]">
+    <aside className="fixed inset-0 top-auto z-50 flex w-full shrink-0 flex-col border-t border-[var(--color-line)] bg-[var(--color-surface)] p-4 sm:hidden lg:static lg:w-[380px] lg:border-l lg:border-t-0 lg:p-6">
       <div className="flex items-center justify-between">
         <h2 className="font-[family-name:var(--font-display)] text-lg font-bold">Task</h2>
         <button
           onClick={onClose}
-          className="rounded-lg p-1.5 text-[var(--color-ink-faint)] hover:bg-[var(--color-surface-muted)] sm:hidden"
+          className="rounded-lg p-1.5 text-[var(--color-ink-faint)] hover:bg-[var(--color-surface-muted)]"
           aria-label="Close"
         >
           <X size={18} />
