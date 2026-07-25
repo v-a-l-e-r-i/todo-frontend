@@ -58,8 +58,8 @@ export default function Sidebar({
   );
 
   return (
-    <aside className="flex w-full shrink-0 flex-col justify-between bg-[var(--color-surface)] p-4 sm:h-full sm:w-64 sm:shrink-0 sm:p-5 rounded-2xl sm:rounded-none max-h-24 sm:max-h-none overflow-hidden sm:overflow-y-auto">
-      <div className="flex flex-col gap-6 overflow-y-auto sm:gap-6">
+    <aside className="flex w-full shrink-0 flex-col justify-between bg-[var(--color-surface)] p-3 sm:h-full sm:w-64 sm:shrink-0 sm:p-5 rounded-2xl sm:rounded-none sm:max-h-none overflow-hidden sm:overflow-y-auto">
+      <div className="flex flex-col gap-3 sm:gap-6 min-h-0">
         <div className="flex items-center gap-2 px-1">
           <div className="h-7 w-7 rounded-lg bg-[var(--color-accent)]" />
           <span className="font-[family-name:var(--font-display)] text-lg font-bold hidden sm:inline">Ledger</span>
@@ -125,8 +125,8 @@ export default function Sidebar({
           )}
         </div>
 
-        <div className="sm:hidden flex items-center gap-2 rounded-xl bg-[var(--color-surface-muted)] px-2 py-1 text-xs text-[var(--color-ink-faint)] focus-within:text-[var(--color-ink)]">
-          <Search size={13} />
+        <div className="sm:hidden flex items-center gap-2 rounded-xl bg-[var(--color-surface-muted)] px-2 py-1.5 text-xs text-[var(--color-ink-faint)] focus-within:text-[var(--color-ink)]">
+          <Search size={14} />
           <input
             value={search}
             onChange={(e) => onSearchChange(e.target.value)}
@@ -135,10 +135,10 @@ export default function Sidebar({
           />
         </div>
 
-        <div className="sm:hidden flex gap-1 overflow-x-auto pb-2">
+        <div className="sm:hidden flex gap-1.5 overflow-x-auto pb-1">
           <button
             onClick={() => onNavChange("all")}
-            className={`shrink-0 rounded-lg px-3 py-1 text-xs font-medium transition whitespace-nowrap ${
+            className={`shrink-0 rounded-lg px-2.5 py-1 text-xs font-medium transition whitespace-nowrap ${
               activeNav === "all"
                 ? "bg-[var(--color-surface-muted)] text-[var(--color-ink)]"
                 : "text-[var(--color-ink-soft)] hover:bg-[var(--color-surface-muted)]/60"
@@ -148,7 +148,7 @@ export default function Sidebar({
           </button>
           <button
             onClick={() => onNavChange("today")}
-            className={`shrink-0 rounded-lg px-3 py-1 text-xs font-medium transition whitespace-nowrap ${
+            className={`shrink-0 rounded-lg px-2.5 py-1 text-xs font-medium transition whitespace-nowrap ${
               activeNav === "today"
                 ? "bg-[var(--color-surface-muted)] text-[var(--color-ink)]"
                 : "text-[var(--color-ink-soft)] hover:bg-[var(--color-surface-muted)]/60"
@@ -158,7 +158,7 @@ export default function Sidebar({
           </button>
           <button
             onClick={() => onNavChange("upcoming")}
-            className={`shrink-0 rounded-lg px-3 py-1 text-xs font-medium transition whitespace-nowrap ${
+            className={`shrink-0 rounded-lg px-2.5 py-1 text-xs font-medium transition whitespace-nowrap ${
               activeNav === "upcoming"
                 ? "bg-[var(--color-surface-muted)] text-[var(--color-ink)]"
                 : "text-[var(--color-ink-soft)] hover:bg-[var(--color-surface-muted)]/60"
@@ -168,7 +168,7 @@ export default function Sidebar({
           </button>
           <button
             onClick={() => onNavChange("overdue")}
-            className={`shrink-0 rounded-lg px-3 py-1 text-xs font-medium transition whitespace-nowrap ${
+            className={`shrink-0 rounded-lg px-2.5 py-1 text-xs font-medium transition whitespace-nowrap ${
               activeNav === "overdue"
                 ? "bg-[var(--color-surface-muted)] text-[var(--color-ink)]"
                 : "text-[var(--color-ink-soft)] hover:bg-[var(--color-surface-muted)]/60"

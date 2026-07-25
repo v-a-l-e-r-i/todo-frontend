@@ -145,29 +145,28 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-[var(--color-canvas)] lg:p-3 lg:gap-3 lg:flex-row">
-      <div className="flex h-screen w-full flex-col gap-2 p-2 lg:h-auto lg:w-auto lg:flex-col lg:gap-0 lg:overflow-hidden lg:p-0">
-        <Sidebar
-          projects={projects}
-          tasks={tasks}
-          activeNav={activeNav}
-          onNavChange={(key) => {
-            setActiveNav(key);
-            setSelectedTaskId(null);
-          }}
-          onAddProject={() => {
-            setEditingProject(null);
-            setProjectModalOpen(true);
-          }}
-          onEditProject={(project) => {
-            setEditingProject(project);
-            setProjectModalOpen(true);
-          }}
-          search={search}
-          onSearchChange={setSearch}
-        />
+    <div className="flex h-screen w-full overflow-hidden bg-[var(--color-canvas)] flex-col lg:flex-row lg:p-3 lg:gap-3 gap-2 p-2">
+      <Sidebar
+        projects={projects}
+        tasks={tasks}
+        activeNav={activeNav}
+        onNavChange={(key) => {
+          setActiveNav(key);
+          setSelectedTaskId(null);
+        }}
+        onAddProject={() => {
+          setEditingProject(null);
+          setProjectModalOpen(true);
+        }}
+        onEditProject={(project) => {
+          setEditingProject(project);
+          setProjectModalOpen(true);
+        }}
+        search={search}
+        onSearchChange={setSearch}
+      />
 
-        <main className="flex min-w-0 flex-1 flex-col overflow-hidden rounded-2xl bg-[var(--color-surface)] p-4 lg:rounded-3xl lg:p-6">
+      <main className="flex min-w-0 flex-1 flex-col overflow-hidden rounded-2xl bg-[var(--color-surface)] p-4 lg:rounded-3xl lg:p-6">
           <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
             <div className="flex items-center gap-2 sm:gap-3">
               <h1 className="font-[family-name:var(--font-display)] text-xl font-bold sm:text-2xl">{title}</h1>
@@ -224,27 +223,26 @@ export default function DashboardPage() {
             </div>
           </div>
         </main>
-      </div>
 
-      <TaskDetailPanel
-        task={selectedTask}
-        projects={projects}
-        onClose={() => setSelectedTaskId(null)}
-        onSave={handleSave}
-        onMove={handleMove}
-        onDelete={handleDelete}
-      />
+        <TaskDetailPanel
+          task={selectedTask}
+          projects={projects}
+          onClose={() => setSelectedTaskId(null)}
+          onSave={handleSave}
+          onMove={handleMove}
+          onDelete={handleDelete}
+        />
 
-      <ProjectModal
-        open={projectModalOpen}
-        project={editingProject}
-        onClose={() => setProjectModalOpen(false)}
-        onCreate={handleCreateProject}
-        onUpdate={handleUpdateProject}
-        onDelete={handleDeleteProject}
-      />
+        <ProjectModal
+          open={projectModalOpen}
+          project={editingProject}
+          onClose={() => setProjectModalOpen(false)}
+          onCreate={handleCreateProject}
+          onUpdate={handleUpdateProject}
+          onDelete={handleDeleteProject}
+        />
 
-      <ShareModal project={activeProject} open={shareModalOpen} onClose={() => setShareModalOpen(false)} />
+        <ShareModal project={activeProject} open={shareModalOpen} onClose={() => setShareModalOpen(false)} />
     </div>
   );
 }
