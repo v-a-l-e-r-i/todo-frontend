@@ -58,14 +58,14 @@ export default function Sidebar({
   );
 
   return (
-    <aside className="flex h-auto w-full flex-col justify-between bg-[var(--color-surface)] p-4 sm:h-full sm:w-64 sm:shrink-0 sm:p-5 rounded-2xl sm:rounded-none">
-      <div className="flex flex-col gap-6 overflow-y-auto">
+    <aside className="flex w-full shrink-0 flex-col justify-between bg-[var(--color-surface)] p-4 sm:h-full sm:w-64 sm:shrink-0 sm:p-5 rounded-2xl sm:rounded-none max-h-24 sm:max-h-none overflow-hidden sm:overflow-y-auto">
+      <div className="flex flex-col gap-6 overflow-y-auto sm:gap-6">
         <div className="flex items-center gap-2 px-1">
           <div className="h-7 w-7 rounded-lg bg-[var(--color-accent)]" />
-          <span className="font-[family-name:var(--font-display)] text-lg font-bold">Ledger</span>
+          <span className="font-[family-name:var(--font-display)] text-lg font-bold hidden sm:inline">Ledger</span>
         </div>
 
-        <label className="flex items-center gap-2 rounded-xl bg-[var(--color-surface-muted)] px-3 py-2 text-sm text-[var(--color-ink-faint)] focus-within:text-[var(--color-ink)]">
+        <label className="hidden sm:flex items-center gap-2 rounded-xl bg-[var(--color-surface-muted)] px-3 py-2 text-sm text-[var(--color-ink-faint)] focus-within:text-[var(--color-ink)]">
           <Search size={15} />
           <input
             value={search}
@@ -75,7 +75,7 @@ export default function Sidebar({
           />
         </label>
 
-        <div className="flex flex-col gap-1">
+        <div className="hidden sm:flex flex-col gap-1">
           <p className="px-3 text-xs font-semibold uppercase tracking-wider text-[var(--color-ink-faint)]">
             Tasks
           </p>
@@ -85,7 +85,7 @@ export default function Sidebar({
           {navItem("overdue", "Overdue", <AlertCircle size={17} />, counts.overdue)}
         </div>
 
-        <div className="flex flex-col gap-1">
+        <div className="hidden sm:flex flex-col gap-1">
           <div className="flex items-center justify-between px-3">
             <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-ink-faint)]">
               Lists
@@ -124,9 +124,62 @@ export default function Sidebar({
             <p className="px-3 text-sm text-[var(--color-ink-faint)]">No lists yet.</p>
           )}
         </div>
+
+        <div className="sm:hidden flex items-center gap-2 rounded-xl bg-[var(--color-surface-muted)] px-2 py-1 text-xs text-[var(--color-ink-faint)] focus-within:text-[var(--color-ink)]">
+          <Search size={13} />
+          <input
+            value={search}
+            onChange={(e) => onSearchChange(e.target.value)}
+            placeholder="Search"
+            className="flex-1 bg-transparent text-[var(--color-ink)] outline-none placeholder:text-[var(--color-ink-faint)]"
+          />
+        </div>
+
+        <div className="sm:hidden flex gap-1 overflow-x-auto pb-2">
+          <button
+            onClick={() => onNavChange("all")}
+            className={`shrink-0 rounded-lg px-3 py-1 text-xs font-medium transition whitespace-nowrap ${
+              activeNav === "all"
+                ? "bg-[var(--color-surface-muted)] text-[var(--color-ink)]"
+                : "text-[var(--color-ink-soft)] hover:bg-[var(--color-surface-muted)]/60"
+            }`}
+          >
+            All
+          </button>
+          <button
+            onClick={() => onNavChange("today")}
+            className={`shrink-0 rounded-lg px-3 py-1 text-xs font-medium transition whitespace-nowrap ${
+              activeNav === "today"
+                ? "bg-[var(--color-surface-muted)] text-[var(--color-ink)]"
+                : "text-[var(--color-ink-soft)] hover:bg-[var(--color-surface-muted)]/60"
+            }`}
+          >
+            Today
+          </button>
+          <button
+            onClick={() => onNavChange("upcoming")}
+            className={`shrink-0 rounded-lg px-3 py-1 text-xs font-medium transition whitespace-nowrap ${
+              activeNav === "upcoming"
+                ? "bg-[var(--color-surface-muted)] text-[var(--color-ink)]"
+                : "text-[var(--color-ink-soft)] hover:bg-[var(--color-surface-muted)]/60"
+            }`}
+          >
+            Upcoming
+          </button>
+          <button
+            onClick={() => onNavChange("overdue")}
+            className={`shrink-0 rounded-lg px-3 py-1 text-xs font-medium transition whitespace-nowrap ${
+              activeNav === "overdue"
+                ? "bg-[var(--color-surface-muted)] text-[var(--color-ink)]"
+                : "text-[var(--color-ink-soft)] hover:bg-[var(--color-surface-muted)]/60"
+            }`}
+          >
+            Overdue
+          </button>
+        </div>
       </div>
 
-      <div className="flex items-center justify-between gap-2 border-t border-[var(--color-line)] pt-4">
+      <div className="hidden sm:flex items-center justify-between gap-2 border-t border-[var(--color-line)] pt-4">
         <div className="min-w-0">
           <p className="truncate text-sm font-semibold">{user?.username}</p>
           <p className="truncate text-xs text-[var(--color-ink-faint)]">{user?.email}</p>
