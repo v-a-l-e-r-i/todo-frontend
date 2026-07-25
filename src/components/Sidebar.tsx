@@ -58,7 +58,7 @@ export default function Sidebar({
   );
 
   return (
-    <aside className="flex h-full w-64 shrink-0 flex-col justify-between bg-[var(--color-surface)] p-5">
+    <aside className="flex h-full w-full flex-col justify-between bg-[var(--color-surface)] p-5 md:w-64 md:shrink-0">
       <div className="flex flex-col gap-6 overflow-y-auto">
         <div className="flex items-center gap-2 px-1">
           <div className="h-7 w-7 rounded-lg bg-[var(--color-accent)]" />

@@ -86,12 +86,12 @@ export default function TaskDetailPanel({ task, projects, onClose, onSave, onMov
   }
 
   return (
-    <aside className="flex w-full shrink-0 flex-col border-l border-[var(--color-line)] bg-[var(--color-surface)] p-6 lg:w-[380px]">
+    <aside className="flex w-full shrink-0 flex-col border-l border-[var(--color-line)] bg-[var(--color-surface)] p-4 sm:p-6 lg:w-[380px]">
       <div className="flex items-center justify-between">
         <h2 className="font-[family-name:var(--font-display)] text-lg font-bold">Task</h2>
         <button
           onClick={onClose}
-          className="rounded-lg p-1.5 text-[var(--color-ink-faint)] hover:bg-[var(--color-surface-muted)] lg:hidden"
+          className="rounded-lg p-1.5 text-[var(--color-ink-faint)] hover:bg-[var(--color-surface-muted)] md:hidden"
           aria-label="Close"
         >
           <X size={18} />
@@ -113,13 +113,13 @@ export default function TaskDetailPanel({ task, projects, onClose, onSave, onMov
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            rows={4}
+            rows={3}
             className="resize-none rounded-xl border border-[var(--color-line)] bg-[var(--color-surface-muted)] px-3 py-2.5 text-sm text-[var(--color-ink)] outline-none focus:border-[var(--color-ink)]"
             placeholder="Add more detail…"
           />
         </label>
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <label className="flex flex-col gap-1 text-sm font-medium text-[var(--color-ink-soft)]">
             List
             <select
@@ -146,7 +146,7 @@ export default function TaskDetailPanel({ task, projects, onClose, onSave, onMov
           </label>
         </div>
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <label className="flex flex-col gap-1 text-sm font-medium text-[var(--color-ink-soft)]">
             Priority
             <select
@@ -178,11 +178,11 @@ export default function TaskDetailPanel({ task, projects, onClose, onSave, onMov
         </div>
       </div>
 
-      <div className="mt-4 flex items-center gap-2 border-t border-[var(--color-line)] pt-4">
+      <div className="mt-4 flex flex-col gap-2 border-t border-[var(--color-line)] pt-4 sm:flex-row sm:items-center">
         <button
           onClick={handleDelete}
           disabled={deleting}
-          className="flex items-center gap-1.5 rounded-xl border border-[var(--color-line)] px-4 py-2.5 text-sm font-semibold text-[var(--color-coral)] transition hover:bg-[var(--color-surface-muted)] disabled:opacity-60"
+          className="flex items-center justify-center gap-1.5 rounded-xl border border-[var(--color-line)] px-4 py-2.5 text-sm font-semibold text-[var(--color-coral)] transition hover:bg-[var(--color-surface-muted)] disabled:opacity-60 sm:justify-start"
         >
           <Trash2 size={15} />
           Delete
@@ -190,7 +190,7 @@ export default function TaskDetailPanel({ task, projects, onClose, onSave, onMov
         <button
           onClick={handleSave}
           disabled={saving || !title.trim()}
-          className="ml-auto rounded-xl bg-[var(--color-accent)] px-5 py-2.5 text-sm font-semibold text-[var(--color-accent-ink)] transition hover:brightness-95 disabled:opacity-60"
+          className="rounded-xl bg-[var(--color-accent)] px-5 py-2.5 text-sm font-semibold text-[var(--color-accent-ink)] transition hover:brightness-95 disabled:opacity-60 sm:ml-auto"
         >
           {saving ? "Saving…" : "Save changes"}
         </button>

@@ -1,7 +1,7 @@
 "use client";
 
-import { FormEvent, useMemo, useState } from "react";
-import { Mail, Plus } from "lucide-react";
+import { FormEvent, useMemo, useState, useEffect } from "react";
+import { Mail, Plus, Menu, X } from "lucide-react";
 import Sidebar from "@/components/Sidebar";
 import TaskRow from "@/components/TaskRow";
 import TaskDetailPanel from "@/components/TaskDetailPanel";
@@ -34,6 +34,7 @@ export default function DashboardPage() {
   const [projectModalOpen, setProjectModalOpen] = useState(false);
   const [editingProject, setEditingProject] = useState<ProjectRead | null>(null);
   const [shareModalOpen, setShareModalOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const activeProject = activeNav.startsWith("project:")
     ? projects.find((p) => `project:${p.id}` === activeNav) ?? null
@@ -145,64 +146,86 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-[var(--color-canvas)] p-3 gap-3">
-      <Sidebar
-        projects={projects}
-        tasks={tasks}
-        activeNav={activeNav}
-        onNavChange={(key) => {
-          setActiveNav(key);
-          setSelectedTaskId(null);
-        }}
-        onAddProject={() => {
-          setEditingProject(null);
-          setProjectModalOpen(true);
-        }}
-        onEditProject={(project) => {
-          setEditingProject(project);
-          setProjectModalOpen(true);
-        }}
-        search={search}
-        onSearchChange={setSearch}
-      />
+    <div className="flex h-screen w-full flex-col bg-[var(--color-canvas)] md:flex-row md:overflow-hidden md:p-3 md:gap-3">
+      {/* Mobile/Tablet sidebar toggle */}
+      <div className="flex items-center justify-between bg-[var(--color-surface)] px-4 py-3 md:hidden">
+        <button
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+          className="rounded-lg p-2 text-[var(--color-ink)] hover:bg-[var(--color-surface-muted)]"
+          aria-label="Toggle menu"
+        >
+          {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
+        <h1 className="font-[family-name:var(--font-display)] text-lg font-bold">Ledger</h1>
+        <div className="w-10" />
+      </div>
 
-      <main className="flex min-w-0 flex-1 flex-col rounded-3xl bg-[var(--color-surface)] p-6">
-        <div className="flex items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <h1 className="font-[family-name:var(--font-display)] text-2xl font-bold">{title}</h1>
-            <span className="rounded-full bg-[var(--color-surface-muted)] px-2.5 py-0.5 text-sm font-semibold text-[var(--color-ink-faint)]">
-              {visibleTasks.length}
-            </span>
+      {/* Sidebar */}
+      <div className={`fixed inset-0 top-12 z-40 bg-black/50 md:static md:inset-auto md:z-auto md:bg-transparent transition-opacity ${sidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none md:opacity-100 md:pointer-events-auto'}`} onClick={() => setSidebarOpen(false)}>
+        <div onClick={(e) => e.stopPropagation()} className="h-full md:block">
+          <Sidebar
+              projects={projects}
+              tasks={tasks}
+              activeNav={activeNav}
+              onNavChange={(key) => {
+                setActiveNav(key);
+                setSelectedTaskId(null);
+                setSidebarOpen(false);
+              }}
+              onAddProject={() => {
+                setEditingProject(null);
+                setProjectModalOpen(true);
+              }}
+              onEditProject={(project) => {
+                setEditingProject(project);
+                setProjectModalOpen(true);
+              }}
+              search={search}
+              onSearchChange={setSearch}
+            />
           </div>
-          {activeProject && (
-            <button
-              onClick={() => setShareModalOpen(true)}
-              className="flex items-center gap-1.5 rounded-xl border border-[var(--color-line)] px-3 py-2 text-sm font-medium text-[var(--color-ink-soft)] hover:bg-[var(--color-surface-muted)]"
-            >
-              <Mail size={15} />
-              Share
-            </button>
-          )}
         </div>
 
-        <form onSubmit={handleAddTask} className="mt-5 flex items-center gap-2">
-          <Plus size={17} className="text-[var(--color-ink-faint)]" />
-          <input
-            value={newTitle}
-            onChange={(e) => setNewTitle(e.target.value)}
-            placeholder="Add new task"
-            className="w-full bg-transparent text-sm font-medium outline-none placeholder:text-[var(--color-ink-faint)]"
-          />
-          <button
-            type="submit"
-            disabled={adding || !newTitle.trim()}
-            className="shrink-0 rounded-xl bg-[var(--color-accent)] px-4 py-2 text-sm font-semibold text-[var(--color-accent-ink)] transition hover:brightness-95 disabled:opacity-50"
-          >
-            Add
-          </button>
-        </form>
+      {/* Main content */}
+      <main className="flex min-w-0 flex-1 flex-col overflow-hidden md:rounded-3xl md:bg-[var(--color-surface)] md:p-6">
+        <div className="flex flex-col gap-4 px-4 py-4 md:p-0">
+          <div className="flex flex-col items-start justify-between gap-2 md:flex-row md:items-center md:gap-3">
+            <div className="flex items-center gap-2 md:gap-3">
+              <h1 className="font-[family-name:var(--font-display)] text-xl font-bold md:text-2xl">{title}</h1>
+              <span className="rounded-full bg-[var(--color-surface-muted)] px-2.5 py-0.5 text-sm font-semibold text-[var(--color-ink-faint)]">
+                {visibleTasks.length}
+              </span>
+            </div>
+            {activeProject && (
+              <button
+                onClick={() => setShareModalOpen(true)}
+                className="flex items-center gap-1.5 rounded-xl border border-[var(--color-line)] px-3 py-2 text-sm font-medium text-[var(--color-ink-soft)] hover:bg-[var(--color-surface-muted)]"
+              >
+                <Mail size={15} />
+                <span className="hidden sm:inline">Share</span>
+              </button>
+            )}
+          </div>
 
-        <div className="mt-4 flex-1 overflow-y-auto pr-1">
+          <form onSubmit={handleAddTask} className="flex items-center gap-2">
+            <Plus size={17} className="text-[var(--color-ink-faint)]" />
+            <input
+              value={newTitle}
+              onChange={(e) => setNewTitle(e.target.value)}
+              placeholder="Add new task"
+              className="w-full bg-transparent text-sm font-medium outline-none placeholder:text-[var(--color-ink-faint)] md:bg-[var(--color-surface-muted)] md:rounded-lg md:px-3 md:py-2"
+            />
+            <button
+              type="submit"
+              disabled={adding || !newTitle.trim()}
+              className="shrink-0 rounded-xl bg-[var(--color-accent)] px-3 py-2 text-sm font-semibold text-[var(--color-accent-ink)] transition hover:brightness-95 disabled:opacity-50 md:px-4"
+            >
+              Add
+            </button>
+          </form>
+        </div>
+
+        <div className="flex-1 overflow-y-auto px-4 pb-4 md:mt-4 md:pr-1 md:p-0">
           {loading && <p className="p-4 text-sm text-[var(--color-ink-faint)]">Loading…</p>}
 
           {!loading && visibleTasks.length === 0 && (
@@ -217,21 +240,40 @@ export default function DashboardPage() {
                 project={projects.find((p) => p.id === task.project_id)}
                 active={task.id === selectedTaskId}
                 onToggleDone={handleToggleDone}
-                onOpen={(t) => setSelectedTaskId(t.id)}
+                onOpen={(t) => {
+                  setSelectedTaskId(t.id);
+                  setSidebarOpen(false);
+                }}
               />
             ))}
           </div>
         </div>
       </main>
 
-      <TaskDetailPanel
-        task={selectedTask}
-        projects={projects}
-        onClose={() => setSelectedTaskId(null)}
-        onSave={handleSave}
-        onMove={handleMove}
-        onDelete={handleDelete}
-      />
+      {/* Task detail panel - modal on mobile, sidebar on desktop */}
+      {selectedTask && (
+        <div className="fixed inset-0 z-50 flex md:static md:z-auto">
+          <div className="absolute inset-0 bg-black/50 md:hidden" onClick={() => setSelectedTaskId(null)} />
+          <div className="relative ml-auto w-full max-w-md bg-[var(--color-surface)] md:max-w-none md:w-[380px] md:border-l md:border-[var(--color-line)]">
+            <TaskDetailPanel
+              task={selectedTask}
+              projects={projects}
+              onClose={() => setSelectedTaskId(null)}
+              onSave={handleSave}
+              onMove={handleMove}
+              onDelete={handleDelete}
+            />
+          </div>
+        </div>
+      )}
+
+      {!selectedTask && (
+        <aside className="hidden w-[380px] shrink-0 flex-col items-center justify-center gap-2 border-l border-[var(--color-line)] bg-[var(--color-surface)] p-6 text-center lg:flex">
+          <p className="text-sm font-medium text-[var(--color-ink-faint)]">
+            Select a task to see its details
+          </p>
+        </aside>
+      )}
 
       <ProjectModal
         open={projectModalOpen}
