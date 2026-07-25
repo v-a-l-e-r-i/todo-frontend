@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+:root {
+  --color-canvas: #aebb98;
+  --color-canvas-deep: #98a781;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f4f6ef;
+  --color-ink: #16190f;
+  --color-ink-soft: #6d735f;
+  --color-ink-faint: #9aa08a;
+  --color-accent: #f6c445;
+  --color-accent-ink: #2b2205;
+  --color-coral: #e2604c;
+  --color-teal: #4f8f86;
+  --color-line: #e4e8dc;
+}
+
+@theme inline {
+  --color-canvas: var(--color-canvas);
+  --color-canvas-deep: var(--color-canvas-deep);
+  --color-surface: var(--color-surface);
+  --color-surface-muted: var(--color-surface-muted);
+  --color-ink: var(--color-ink);
+  --color-ink-soft: var(--color-ink-soft);
+  --color-ink-faint: var(--color-ink-faint);
+  --color-accent: var(--color-accent);
+  --color-accent-ink: var(--color-accent-ink);
+  --color-coral: var(--color-coral);
+  --color-teal: var(--color-teal);
+  --color-line: var(--color-line);
+  --font-display: "Century Gothic", "Segoe UI Semibold", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: ui-sans-serif, system-ui, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-in {
+  animation: toast-in 0.18s ease-out;
+}
+
+/* Custom checkbox: hand-drawn checkmark stroke that draws in on completion */
+.task-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  border-radius: 999px;
+  border: 2px solid var(--color-ink-faint);
+  background: var(--color-surface);
+  cursor: pointer;
+  position: relative;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.task-checkbox:hover {
+  border-color: var(--color-ink-soft);
+}
+.task-checkbox:checked {
+  background: var(--color-ink);
+  border-color: var(--color-ink);
+}
+.task-checkbox:checked::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 2px;
+  width: 6px;
+  height: 11px;
+  border: solid var(--color-accent);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  animation: check-draw 0.22s ease-out;
+}
+@keyframes check-draw {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-in,
+  .task-checkbox:checked::after {
+    animation: none !important;
+  }
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+}
