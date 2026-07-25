@@ -168,62 +168,63 @@ export default function DashboardPage() {
         />
 
         <main className="flex min-w-0 flex-1 flex-col overflow-hidden rounded-2xl bg-[var(--color-surface)] p-4 lg:rounded-3xl lg:p-6">
-        <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
-          <div className="flex items-center gap-2 sm:gap-3">
-            <h1 className="font-[family-name:var(--font-display)] text-xl font-bold sm:text-2xl">{title}</h1>
-            <span className="rounded-full bg-[var(--color-surface-muted)] px-2.5 py-0.5 text-sm font-semibold text-[var(--color-ink-faint)]">
-              {visibleTasks.length}
-            </span>
+          <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <h1 className="font-[family-name:var(--font-display)] text-xl font-bold sm:text-2xl">{title}</h1>
+              <span className="rounded-full bg-[var(--color-surface-muted)] px-2.5 py-0.5 text-sm font-semibold text-[var(--color-ink-faint)]">
+                {visibleTasks.length}
+              </span>
+            </div>
+            {activeProject && (
+              <button
+                onClick={() => setShareModalOpen(true)}
+                className="flex items-center gap-1.5 rounded-xl border border-[var(--color-line)] px-3 py-2 text-sm font-medium text-[var(--color-ink-soft)] hover:bg-[var(--color-surface-muted)]"
+              >
+                <Mail size={15} />
+                Share
+              </button>
+            )}
           </div>
-          {activeProject && (
+
+          <form onSubmit={handleAddTask} className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-2">
+            <Plus size={17} className="hidden text-[var(--color-ink-faint)] sm:block" />
+            <input
+              value={newTitle}
+              onChange={(e) => setNewTitle(e.target.value)}
+              placeholder="Add new task"
+              className="w-full bg-transparent text-sm font-medium outline-none placeholder:text-[var(--color-ink-faint)]"
+            />
             <button
-              onClick={() => setShareModalOpen(true)}
-              className="flex items-center gap-1.5 rounded-xl border border-[var(--color-line)] px-3 py-2 text-sm font-medium text-[var(--color-ink-soft)] hover:bg-[var(--color-surface-muted)]"
+              type="submit"
+              disabled={adding || !newTitle.trim()}
+              className="shrink-0 rounded-xl bg-[var(--color-accent)] px-4 py-2 text-sm font-semibold text-[var(--color-accent-ink)] transition hover:brightness-95 disabled:opacity-50 w-full sm:w-auto"
             >
-              <Mail size={15} />
-              Share
+              Add
             </button>
-          )}
-        </div>
+          </form>
 
-        <form onSubmit={handleAddTask} className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-2">
-          <Plus size={17} className="hidden text-[var(--color-ink-faint)] sm:block" />
-          <input
-            value={newTitle}
-            onChange={(e) => setNewTitle(e.target.value)}
-            placeholder="Add new task"
-            className="w-full bg-transparent text-sm font-medium outline-none placeholder:text-[var(--color-ink-faint)]"
-          />
-          <button
-            type="submit"
-            disabled={adding || !newTitle.trim()}
-            className="shrink-0 rounded-xl bg-[var(--color-accent)] px-4 py-2 text-sm font-semibold text-[var(--color-accent-ink)] transition hover:brightness-95 disabled:opacity-50 w-full sm:w-auto"
-          >
-            Add
-          </button>
-        </form>
+          <div className="mt-4 flex-1 overflow-y-auto pr-1">
+            {loading && <p className="p-4 text-sm text-[var(--color-ink-faint)]">Loading…</p>}
 
-        <div className="mt-4 flex-1 overflow-y-auto pr-1">
-          {loading && <p className="p-4 text-sm text-[var(--color-ink-faint)]">Loading…</p>}
+            {!loading && visibleTasks.length === 0 && (
+              <p className="p-4 text-sm text-[var(--color-ink-faint)]">Nothing here yet.</p>
+            )}
 
-          {!loading && visibleTasks.length === 0 && (
-            <p className="p-4 text-sm text-[var(--color-ink-faint)]">Nothing here yet.</p>
-          )}
-
-          <div className="flex flex-col gap-1.5">
-            {visibleTasks.map((task) => (
-              <TaskRow
-                key={task.id}
-                task={task}
-                project={projects.find((p) => p.id === task.project_id)}
-                active={task.id === selectedTaskId}
-                onToggleDone={handleToggleDone}
-                onOpen={(t) => setSelectedTaskId(t.id)}
-              />
-            ))}
+            <div className="flex flex-col gap-1.5">
+              {visibleTasks.map((task) => (
+                <TaskRow
+                  key={task.id}
+                  task={task}
+                  project={projects.find((p) => p.id === task.project_id)}
+                  active={task.id === selectedTaskId}
+                  onToggleDone={handleToggleDone}
+                  onOpen={(t) => setSelectedTaskId(t.id)}
+                />
+              ))}
+            </div>
           </div>
-        </div>
-      </main>
+        </main>
+      </div>
 
       <TaskDetailPanel
         task={selectedTask}
@@ -244,7 +245,6 @@ export default function DashboardPage() {
       />
 
       <ShareModal project={activeProject} open={shareModalOpen} onClose={() => setShareModalOpen(false)} />
-    </div>
     </div>
   );
 }
