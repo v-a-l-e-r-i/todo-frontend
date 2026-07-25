@@ -145,7 +145,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-[var(--color-canvas)] p-3 gap-3">
+    <div className="flex h-screen w-full flex-col overflow-hidden bg-[var(--color-canvas)] p-2 gap-2 lg:flex-row lg:p-3 lg:gap-3">
       <Sidebar
         projects={projects}
         tasks={tasks}
@@ -166,10 +166,10 @@ export default function DashboardPage() {
         onSearchChange={setSearch}
       />
 
-      <main className="flex min-w-0 flex-1 flex-col rounded-3xl bg-[var(--color-surface)] p-6">
-        <div className="flex items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <h1 className="font-[family-name:var(--font-display)] text-2xl font-bold">{title}</h1>
+      <main className="flex min-w-0 flex-1 flex-col rounded-2xl bg-[var(--color-surface)] p-4 lg:rounded-3xl lg:p-6">
+        <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <h1 className="font-[family-name:var(--font-display)] text-xl font-bold sm:text-2xl">{title}</h1>
             <span className="rounded-full bg-[var(--color-surface-muted)] px-2.5 py-0.5 text-sm font-semibold text-[var(--color-ink-faint)]">
               {visibleTasks.length}
             </span>
@@ -185,8 +185,8 @@ export default function DashboardPage() {
           )}
         </div>
 
-        <form onSubmit={handleAddTask} className="mt-5 flex items-center gap-2">
-          <Plus size={17} className="text-[var(--color-ink-faint)]" />
+        <form onSubmit={handleAddTask} className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-2">
+          <Plus size={17} className="hidden text-[var(--color-ink-faint)] sm:block" />
           <input
             value={newTitle}
             onChange={(e) => setNewTitle(e.target.value)}
@@ -196,7 +196,7 @@ export default function DashboardPage() {
           <button
             type="submit"
             disabled={adding || !newTitle.trim()}
-            className="shrink-0 rounded-xl bg-[var(--color-accent)] px-4 py-2 text-sm font-semibold text-[var(--color-accent-ink)] transition hover:brightness-95 disabled:opacity-50"
+            className="shrink-0 rounded-xl bg-[var(--color-accent)] px-4 py-2 text-sm font-semibold text-[var(--color-accent-ink)] transition hover:brightness-95 disabled:opacity-50 w-full sm:w-auto"
           >
             Add
           </button>

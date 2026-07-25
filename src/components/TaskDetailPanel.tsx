@@ -48,7 +48,7 @@ export default function TaskDetailPanel({ task, projects, onClose, onSave, onMov
 
   if (!task) {
     return (
-      <aside className="hidden w-[380px] shrink-0 flex-col items-center justify-center gap-2 border-l border-[var(--color-line)] bg-[var(--color-surface)] p-6 text-center lg:flex">
+      <aside className="hidden w-full flex-col items-center justify-center gap-2 border-t border-[var(--color-line)] bg-[var(--color-surface)] p-6 text-center sm:border-l sm:border-t-0 lg:flex lg:w-[380px] lg:shrink-0">
         <p className="text-sm font-medium text-[var(--color-ink-faint)]">
           Select a task to see its details
         </p>
@@ -86,19 +86,19 @@ export default function TaskDetailPanel({ task, projects, onClose, onSave, onMov
   }
 
   return (
-    <aside className="flex w-full shrink-0 flex-col border-l border-[var(--color-line)] bg-[var(--color-surface)] p-6 lg:w-[380px]">
+    <aside className="fixed inset-0 top-auto z-50 flex w-full shrink-0 flex-col border-t border-[var(--color-line)] bg-[var(--color-surface)] p-4 sm:static sm:p-6 lg:w-[380px]">
       <div className="flex items-center justify-between">
         <h2 className="font-[family-name:var(--font-display)] text-lg font-bold">Task</h2>
         <button
           onClick={onClose}
-          className="rounded-lg p-1.5 text-[var(--color-ink-faint)] hover:bg-[var(--color-surface-muted)] lg:hidden"
+          className="rounded-lg p-1.5 text-[var(--color-ink-faint)] hover:bg-[var(--color-surface-muted)] sm:hidden"
           aria-label="Close"
         >
           <X size={18} />
         </button>
       </div>
 
-      <div className="mt-5 flex flex-1 flex-col gap-4 overflow-y-auto">
+      <div className="mt-4 flex flex-1 flex-col gap-4 overflow-y-auto sm:mt-5">
         <label className="flex flex-col gap-1 text-sm font-medium">
           <input
             value={title}
@@ -178,11 +178,11 @@ export default function TaskDetailPanel({ task, projects, onClose, onSave, onMov
         </div>
       </div>
 
-      <div className="mt-4 flex items-center gap-2 border-t border-[var(--color-line)] pt-4">
+      <div className="mt-4 flex flex-col gap-2 border-t border-[var(--color-line)] pt-4 sm:flex-row sm:items-center sm:gap-2">
         <button
           onClick={handleDelete}
           disabled={deleting}
-          className="flex items-center gap-1.5 rounded-xl border border-[var(--color-line)] px-4 py-2.5 text-sm font-semibold text-[var(--color-coral)] transition hover:bg-[var(--color-surface-muted)] disabled:opacity-60"
+          className="flex items-center justify-center gap-1.5 rounded-xl border border-[var(--color-line)] px-4 py-2.5 text-sm font-semibold text-[var(--color-coral)] transition hover:bg-[var(--color-surface-muted)] disabled:opacity-60 sm:justify-start"
         >
           <Trash2 size={15} />
           Delete
@@ -190,7 +190,7 @@ export default function TaskDetailPanel({ task, projects, onClose, onSave, onMov
         <button
           onClick={handleSave}
           disabled={saving || !title.trim()}
-          className="ml-auto rounded-xl bg-[var(--color-accent)] px-5 py-2.5 text-sm font-semibold text-[var(--color-accent-ink)] transition hover:brightness-95 disabled:opacity-60"
+          className="rounded-xl bg-[var(--color-accent)] px-5 py-2.5 text-sm font-semibold text-[var(--color-accent-ink)] transition hover:brightness-95 disabled:opacity-60 w-full sm:ml-auto sm:w-auto"
         >
           {saving ? "Saving…" : "Save changes"}
         </button>
