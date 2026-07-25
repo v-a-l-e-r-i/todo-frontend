@@ -18,7 +18,7 @@ import {
   UserUpdatePayload,
 } from "./types";
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "https://todo-backend-production-ce11.up.railway.app/api/v1/";
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 
 const ACCESS_KEY = "ledger.access_token";
 const REFRESH_KEY = "ledger.refresh_token";
