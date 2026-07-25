@@ -177,6 +177,44 @@ export default function Sidebar({
             Overdue
           </button>
         </div>
+
+        <div className="sm:hidden flex items-center justify-between gap-2 border-b border-[var(--color-line)] pb-1.5">
+          <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-ink-faint)]">
+            Lists
+          </p>
+          <button
+            onClick={onAddProject}
+            aria-label="Add list"
+            className="rounded-md p-0.5 text-[var(--color-ink-faint)] hover:bg-[var(--color-surface-muted)] hover:text-[var(--color-ink)]"
+          >
+            <Plus size={14} />
+          </button>
+        </div>
+
+        <div className="sm:hidden flex gap-1.5 overflow-x-auto pb-1">
+          {projects.map((p) => (
+            <button
+              key={p.id}
+              onClick={() => onNavChange(`project:${p.id}`)}
+              onDoubleClick={() => onEditProject(p)}
+              className={`shrink-0 rounded-lg px-2.5 py-1 text-xs font-medium transition whitespace-nowrap flex items-center gap-1.5 ${
+                activeNav === `project:${p.id}`
+                  ? "bg-[var(--color-surface-muted)] text-[var(--color-ink)]"
+                  : "text-[var(--color-ink-soft)] hover:bg-[var(--color-surface-muted)]/60"
+              }`}
+              title="Double-click to edit"
+            >
+              <span
+                className="h-2 w-2 shrink-0 rounded-full"
+                style={{ background: p.color ?? "var(--color-ink-faint)" }}
+              />
+              <span className="truncate">{p.name}</span>
+            </button>
+          ))}
+          {projects.length === 0 && (
+            <p className="text-xs text-[var(--color-ink-faint)] whitespace-nowrap">No lists yet.</p>
+          )}
+        </div>
       </div>
 
       <div className="hidden sm:flex items-center justify-between gap-2 border-t border-[var(--color-line)] pt-4">
